@@ -1,34 +1,11 @@
-import {myFetch} from "../../hooks/useSWR"
+import Cats from "./components/cats/cats"
+import QuickStartSwr from "./components/swr/quick-start/quick-start-swr"
+import GlobalConfig from "./components/swr/global/globalConfig"
+import Jokes from "./components/jokes/jokes"
 
-export async function getStaticProps () {
-  // console.log("In get static props")
-  return fetch("https://aws.random.cat/meow?ref=apilist.fun").then(x => x.json()).then(res=> {
-    console.log(res.file)
-    return {props: {data: 1, res:res.file}}
-  })
-   
+export default () => {
 
-}
-
-export default function Home(props) {
-  console.log("In home")
-  const {data, error, isLoading} = myFetch()  
-  // console.log(myFetch())
- 
-  // console.log(props)
-  return (
-    <>
-    The cat image is generated in Static props.
-    <br />
-    <img src={props.res} alt="" />
-    
-    <div>
-      The joke is generated with SWR.
-      </div>
-    {!error ? isLoading ? "Loading" : <> {data.setup ? <>{data.setup} <div>{data.delivery}</div> </> : data.joke} </> : "Error!"}
-
-    
-    
-    </>
-  )
+    return (<>
+    <Jokes></Jokes>
+    </>)
 }
