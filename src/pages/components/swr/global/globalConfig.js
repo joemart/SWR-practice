@@ -1,7 +1,10 @@
-import useSWR, {SWRConfig} from "swr"
-import {usePosts, useComments, useAlbulms, usePhotos} from "./hook/hooks"
+import useSWR, {SWRConfig, useSWRConfig} from "swr"
+import {usePosts, useComments, useAlbulms, usePhotos} from "../_hooks/hooks"
 
 function Calls () {
+
+    const config = useSWRConfig()
+    console.log(config)
     const {data, error} = usePosts()
     const comments = useComments()
     const albums = useAlbulms()
@@ -16,9 +19,16 @@ export default ( ) =>{
 
     return (
         <SWRConfig value={{refreshInterval: 3000,
-            fetcher: (resource) => fetch(resource ).then(res => res.json())
+            fetcher: (resource) => fetch(resource ).then(res => res.json()),
+            dedupingInterval: 100
         }}>
+            <SWRConfig value={parent => ({
+                refreshInterval: 3000,
+                dedupingInterval: parent.dedupingInterval *4
+        })}>
+
             <Calls></Calls>
+            </SWRConfig>
         </SWRConfig>
     )
 }

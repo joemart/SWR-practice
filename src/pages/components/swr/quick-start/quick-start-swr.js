@@ -1,5 +1,5 @@
 import useSWR from "swr"
-import useComments from "./hook/useComments"
+import useComments from "../_hooks/hooks"
 
 
 
